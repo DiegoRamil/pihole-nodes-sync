@@ -16,8 +16,6 @@ RUN GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -o main cmd/app/main.go
 
 FROM --platform=${BUILDPLATFORM:-linux/amd64} scratch AS prod
 WORKDIR /app
-COPY --from=build /app/main /app/main
+COPY --from=builder /app/main /app/main
 EXPOSE ${PORT}
 CMD ["./main"]
-
-
