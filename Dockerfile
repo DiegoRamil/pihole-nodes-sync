@@ -1,10 +1,6 @@
-FROM -platform=${BUILDPLATFORM:-linux/amd64} golang:1.23-alpine AS build
+FROM golang:1.23-alpine AS build
 
-ARG GOARCH
-ARG BUILDPLATFORM
-ARG TARGETOS
-ARG TARGETARCH
-
+ARG GO_ARCH
 
 WORKDIR /app
 
@@ -13,9 +9,9 @@ RUN go mod download
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${GOARCH} go build -ldflags="-w -s" -o main cmd/app/main.go
+RUN GOOS=linux GO_ARCH=${GO_ARCH} go build -o main cmd/app/main.go
 
-FROM --platform=${TARGETPLATFORM:-linux/amd64} scratch AS prod
+FROM scratch AS prod
 WORKDIR /app
 COPY --from=build /app/main /app/main
 EXPOSE ${PORT}
