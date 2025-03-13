@@ -24,10 +24,6 @@ jobs:
           - linux/amd64
           - linux/arm64
           - linux/arm64/v8
-        arch:
-          - amd64
-          - arm64
-          - arm
 
     steps:
       - name: Checkout repository
@@ -62,7 +58,7 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
-            GO_ARCH=${{ matrix.arch }}
+            GO_ARCH=${{ matrix.platform }}
 
       - name: Generate artifact attestation
         uses: actions/attest-build-provenance@v2
