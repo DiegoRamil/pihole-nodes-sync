@@ -41,6 +41,10 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
+      - name: Obtain arch
+        id: obtain_arch
+        run: echo "PLATFORM=$(echo ${{ matrix.platform }} | cut -d'/' -f2 | cut -d'/' -f1)" >> $GITHUB_ENV
+
       - name: Build and push Docker image
         id: push
         uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
@@ -50,6 +54,8 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            GO_ARCH=${{ env.PLATFORM }}
 
       - name: Generate artifact attestation
         uses: actions/attest-build-provenance@v2
