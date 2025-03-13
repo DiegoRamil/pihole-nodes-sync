@@ -9,7 +9,7 @@ RUN go mod download
 
 COPY . .
 
-RUN GO_ARCH=${GO_ARCH} go build -o main cmd/app/main.go
+RUN GOOS=linux GO_ARCH=${GO_ARCH} go build -o main cmd/app/main.go
 
 FROM scratch AS prod
 WORKDIR /app
