@@ -1,11 +1,9 @@
 name: Publish Docker Image
 
 on:
-  workflow_run:
-    workflows: ["goreleaser"]
-    branches: [main]
-    types:
-      - completed
+  push:
+    tags:
+      - "v*.*.*"
 
 env:
   REGISTRY: ghcr.io
