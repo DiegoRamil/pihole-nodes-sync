@@ -1,14 +1,13 @@
 FROM golang:1.23-alpine AS build
-ARG GO_ARCH
 
 WORKDIR /app
 
 COPY go.mod go.sum ./
-RUN GOARCH=${GO_ARCH} go mod download
+RUN go mod download
 
 COPY . .
 
-RUN GOARCH=${GO_ARCH} go build -o main cmd/app/main.go
+RUN go build -o main cmd/app/main.go
 
 FROM scratch AS prod
 WORKDIR /app

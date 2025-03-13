@@ -17,12 +17,6 @@ jobs:
       packages: write
       attestations: write
       id-token: write
-    strategy:
-      fail-fast: true
-      matrix:
-        platform:
-          - linux/amd64
-          - linux/arm64
 
     steps:
       - name: Checkout repository
@@ -49,13 +43,14 @@ jobs:
         id: push
         uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
         with:
-          platforms: ${{ matrix.platform }}
+          platforms: |
+            linux/amd64
+            linux/arm64
+            linux/arm64/v8
           context: .
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          build-args: |
-            GO_ARCH=${{ env.PLATFORM }}
 
       - name: Generate artifact attestation
         uses: actions/attest-build-provenance@v2
