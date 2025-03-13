@@ -61,7 +61,6 @@ create-patch-tag:
 	new_tag=$$(echo $$last_tag | awk -F. '{printf "v%d.%d.%d", $$1, $$2, $$3+1}'); \
 	echo "New tag is: $$new_tag"; \
 	git tag $$new_tag \
-	git push origin $$new_tag
 
 create-minor-tag:
 	@echo "Creating tag..."
@@ -70,7 +69,6 @@ create-minor-tag:
 	new_tag=$$(echo $$last_tag | awk -F. '{printf "v%d.%d.%d", $$1, $$2+1, $$3}'); \
 	echo "New tag is: $$new_tag"; \
 	git tag $$new_tag \
-	git push origin $$new_tag
 
 create-major-tag:
 	@echo "Creating tag..."
@@ -79,6 +77,5 @@ create-major-tag:
 	new_tag=$$(echo $$last_tag | awk -F. '{printf "v%d.%d.%d", $$1+1, $$2, $$3}'); \
 	echo "New tag is: $$new_tag"; \
 	git tag $$new_tag \
-	git push origin $$new_tag
 
 .PHONY: all build run test clean watch create-patch-tag create-minor-tag create-major-tag
