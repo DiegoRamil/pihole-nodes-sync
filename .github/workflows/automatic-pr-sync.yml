@@ -1,0 +1,20 @@
+name: "Automatic PR Sync"
+on:
+  push:
+    branches:
+      - master
+      - develop
+
+jobs:
+  pr_sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Sync all PRs
+        uses: DiegoRamil/actions-pr-auto-update@main
+        with:
+          token: ${{ secrets.GIT_TOKEN }}
+          include_drafts: true
+          exclude_labels: "skip auto update, still in progress"
