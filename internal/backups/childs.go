@@ -7,7 +7,6 @@ import (
 	"io"
 	"mime/multipart"
 	"net/http"
-	"os"
 
 	"github.com/DiegoRamil/pihole-nodes-sync/internal/backups/model"
 	"github.com/DiegoRamil/pihole-nodes-sync/internal/deserializers"
@@ -20,19 +19,19 @@ type BackupChildResponse struct {
 }
 
 func RestoreBackupInChilds(client *http.Client, backup *model.BackupResponse) *BackupChildResponse {
-	basePath := os.Getenv("CHILD_URL")
-	pwd := os.Getenv("CHILD_PASSWORD")
+	basePath := shared.RetrieveEnvVar("CHILD_URL")
+	pwd := shared.RetrieveEnvVar("CHILD_PASSWORD")
 	apiUrl := shared.ConcatBaseUrlAndUri(basePath, "/api/teleporter")
 	body := &bytes.Buffer{}
 	writer := multipart.NewWriter(body)
 
 	part, err := writer.CreateFormFile("file", "export.zip")
 	if err != nil {
-		panic(err)
+		fmt.Printf("Error creating form file %s\n", err)
 	}
 	_, err = part.Write(backup.Content)
 	if err != nil {
-		panic(err)
+		fmt.Printf("Error writing the file %s\n", err)
 	}
 
 	importData := map[string]any{
@@ -51,26 +50,26 @@ func RestoreBackupInChilds(client *http.Client, backup *model.BackupResponse) *B
 
 	importJson, err := json.Marshal(importData)
 	if err != nil {
-		panic(err)
+		fmt.Printf("Error marshalling the import data %s\n", err)
 	}
 
 	part, err = writer.CreateFormField("import")
 	if err != nil {
-		panic(err)
+		fmt.Printf("Error creating form field %s\n", err)
 	}
 	_, err = part.Write(importJson)
 	if err != nil {
-		panic(err)
+		fmt.Printf("Error writing the import data %s\n", err)
 	}
 
 	err = writer.Close()
 	if err != nil {
-		panic(err)
+		fmt.Printf("Error closing the writer %s\n", err)
 	}
 
 	req, err := http.NewRequest("POST", apiUrl, body)
 	if err != nil {
-		panic(err)
+		fmt.Printf("Error creating the request %s\n", err)
 	}
 	authorizationCode := AuthorizeWithPihole(basePath, pwd, client)
 	fmt.Printf("Trying to restore the backup in %s...\n", basePath)
@@ -80,19 +79,18 @@ func RestoreBackupInChilds(client *http.Client, backup *model.BackupResponse) *B
 
 	resp, err := client.Do(req)
 	if err != nil {
-		panic(err)
+		fmt.Printf("Error trying to restore the backup %s\n", err)
 	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
 		content, _ := io.ReadAll(resp.Body)
 		fmt.Printf("Error trying to sync the adlists... %s \n", content)
-		panic(content)
 	}
 
 	resBackupChild := &BackupChildResponse{}
 	if err := deserializers.JsonDeserialize(resp.Body, resBackupChild); err != nil {
-		panic(err)
+		fmt.Printf("Error deserializing the body: %s\n", err)
 	}
 	DeauthorizeToken(client, authorizationCode, basePath)
 	return resBackupChild

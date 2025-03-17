@@ -1,14 +1,14 @@
 package client
 
 import (
-	"os"
 	"strconv"
 
 	"github.com/DiegoRamil/pihole-nodes-sync/internal/backups"
+	"github.com/DiegoRamil/pihole-nodes-sync/internal/shared"
 )
 
 func SyncBetweenNodes() {
-	timeout, err := strconv.Atoi(os.Getenv("TIMEOUT"))
+	timeout, err := strconv.Atoi(shared.RetrieveEnvVar("TIMEOUT"))
 	if err != nil {
 		timeout = 30
 	}

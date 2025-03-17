@@ -2,15 +2,15 @@ package main
 
 import (
 	"fmt"
-	"os"
 	"strconv"
 	"time"
 
 	"github.com/DiegoRamil/pihole-nodes-sync/internal/client"
+	"github.com/DiegoRamil/pihole-nodes-sync/internal/shared"
 )
 
 func main() {
-	timer, err := strconv.Atoi(os.Getenv("SYNC_HOURS"))
+	timer, err := strconv.Atoi(shared.RetrieveEnvVar("SYNC_HOURS"))
 	if err != nil {
 		panic(err)
 	}
