@@ -1,5 +1,6 @@
 name: Run Nancy
 on: [push]
+
 permissions:
   contents: read
   pull-requests: write
