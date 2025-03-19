@@ -92,6 +92,6 @@ func RestoreBackupInChilds(client *http.Client, backup *model.BackupResponse) *B
 	if err := deserializers.JsonDeserialize(resp.Body, resBackupChild); err != nil {
 		fmt.Printf("Error deserializing the body: %s\n", err)
 	}
-	DeauthorizeToken(client, authorizationCode, basePath)
+	UpdateGravity(client, basePath, authorizationCode)
 	return resBackupChild
 }
