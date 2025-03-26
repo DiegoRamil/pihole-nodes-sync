@@ -27,5 +27,4 @@ func UpdateGravity(client *http.Client, baseUrl string, token string) {
 	} else {
 		fmt.Println("Gravity updated successfully")
 	}
-	DeauthorizeToken(client, token, baseUrl)
 }

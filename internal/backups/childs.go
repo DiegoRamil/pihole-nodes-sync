@@ -7,6 +7,7 @@ import (
 	"io"
 	"mime/multipart"
 	"net/http"
+	"strconv"
 
 	"github.com/DiegoRamil/pihole-nodes-sync/internal/backups/model"
 	"github.com/DiegoRamil/pihole-nodes-sync/internal/deserializers"
@@ -92,6 +93,15 @@ func RestoreBackupInChilds(client *http.Client, backup *model.BackupResponse) *B
 	if err := deserializers.JsonDeserialize(resp.Body, resBackupChild); err != nil {
 		fmt.Printf("Error deserializing the body: %s\n", err)
 	}
-	UpdateGravity(client, basePath, authorizationCode)
+
+	update_gravity, err := strconv.ParseBool(shared.RetrieveEnvVar("UPDATE_GRAVITY"))
+	if err != nil {
+		fmt.Printf("Error parsing the update gravity env var %s\n", err)
+	}
+
+	if update_gravity {
+		UpdateGravity(client, basePath, authorizationCode)
+	}
+	DeauthorizeToken(client, authorizationCode, basePath)
 	return resBackupChild
 }
