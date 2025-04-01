@@ -5,6 +5,10 @@ on:
       - master
       - develop
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   pr_sync:
     runs-on: ubuntu-latest

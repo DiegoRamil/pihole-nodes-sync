@@ -67,10 +67,10 @@ make clean
 ## Improvements
 
 - [ ] enable the user to use multiple nodes instead of only one
-- [ ] change panics to errors
+- [x] change panics to errors
 - [ ] add tests
 - [ ] add documentation
 - [ ] add dev docs
-- [ ] upload docker image to registry
+- [x] upload docker image to registry
 - [ ] reuse token and make a mechanism in order to reuse and update it
-- [ ] schedule the sync process
+- [x] schedule the sync process

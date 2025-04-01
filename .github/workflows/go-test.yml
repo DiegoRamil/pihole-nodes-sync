@@ -1,6 +1,9 @@
 name: Go-test
 on: [push, pull_request]
 
+permissions:
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -10,9 +13,9 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v4
         with:
-          go-version: '1.22.x'
+          go-version: "1.24.x"
 
       - name: Build
         run: go build -v ./...
       - name: Test with the Go CLI
-        run: go test ./... 
+        run: go test ./...
