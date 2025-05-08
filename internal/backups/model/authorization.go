@@ -3,9 +3,9 @@ package model
 type Session struct {
 	Valid    bool   `json:"valid"`
 	Totp     bool   `json:"totp"`
-	Sid      string `json:sid`
-	Csrf     string `json:csrf`
-	Validity int    `json:validity`
+	Sid      string `json:"sid"`
+	Csrf     string `json:"csrf"`
+	Validity int    `json:"validity"`
 }
 
 type AuthorizationResponse struct {
