@@ -1,8 +1,12 @@
 package shared
 
-import "os"
+import (
+	"fmt"
+	"os"
+)
 
 func RetrieveEnvVar(key string) string {
+	fmt.Printf("Retrieving environment variable: %s\n", key)
 	v := os.Getenv(key)
 	if v == "" {
 		panic("make sure that you update the environment variables")

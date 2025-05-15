@@ -74,3 +74,4 @@ make clean
 - [x] upload docker image to registry
 - [ ] reuse token and make a mechanism in order to reuse and update it
 - [x] schedule the sync process
+- [ ] create a "debug" mode
