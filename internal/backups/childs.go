@@ -29,15 +29,12 @@ type ChildNode struct {
 func GetChildNodes() []ChildNode {
 	childUrls := strings.Split(shared.RetrieveEnvVar("CHILD_URLS"), ",")
 	childPasswords := strings.Split(shared.RetrieveEnvVar("CHILD_PASSWORDS"), ",")
-	
+
 	// Ensure we have the same number of URLs and passwords
 	if len(childUrls) != len(childPasswords) {
 		fmt.Printf("Warning: Number of CHILD_URLS (%d) doesn't match CHILD_PASSWORDS (%d)\n", len(childUrls), len(childPasswords))
 		// Use the shorter length to avoid index out of range
-		minLen := len(childUrls)
-		if len(childPasswords) < minLen {
-			minLen = len(childPasswords)
-		}
+		minLen := min(len(childPasswords), len(childUrls))
 		childUrls = childUrls[:minLen]
 		childPasswords = childPasswords[:minLen]
 	}
