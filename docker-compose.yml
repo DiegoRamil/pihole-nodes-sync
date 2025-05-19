@@ -7,6 +7,3 @@ services:
     restart: unless-stopped
     ports:
       - ${PORT}:${PORT}
-    environment:
-      APP_ENV: ${APP_ENV}
-      PORT: ${PORT}
