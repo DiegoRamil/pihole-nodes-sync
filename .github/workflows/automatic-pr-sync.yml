@@ -13,11 +13,10 @@ jobs:
   pr_sync:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@ff7abcd0c3c05ccf6adc123a8cd1fd4fb30fb493
 
       - name: Sync all PRs
-        uses: DiegoRamil/actions-pr-auto-update@main
+        uses: DiegoRamil/actions-pr-auto-update@cf3e3923551216c5ea744d3adbe32e7db38a3f0f
         with:
           token: ${{ secrets.GIT_TOKEN }}
           include_drafts: true
