@@ -6,6 +6,7 @@ permissions:
 
 jobs:
   build:
+    name: go-test
     runs-on: ubuntu-latest
 
     steps:
