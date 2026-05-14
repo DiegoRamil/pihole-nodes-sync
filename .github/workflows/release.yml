@@ -20,7 +20,7 @@ jobs:
           go-version: "1.24.x"
 
       - name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@a08664b80c0ab417b1babcbf750274aed2018fef
+        uses: goreleaser/goreleaser-action@5cc7ebb73d78b8f1d7b03c568e7df999c2889ccf
         with:
           distribution: goreleaser
           version: ${{ env.GITHUB_REF_NAME }}
