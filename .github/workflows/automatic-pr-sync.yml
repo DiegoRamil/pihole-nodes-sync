@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@ff7abcd0c3c05ccf6adc123a8cd1fd4fb30fb493
 
       - name: Sync all PRs
-        uses: DiegoRamil/actions-pr-auto-update@cf3e3923551216c5ea744d3adbe32e7db38a3f0f
+        uses: DiegoRamil/actions-pr-auto-update@34a3d0c3c5551fde0491c4598c5f486d73ef8bc1
         with:
           token: ${{ secrets.GIT_TOKEN }}
           include_drafts: true
